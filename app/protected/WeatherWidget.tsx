@@ -27,7 +27,7 @@ const WeatherWidget: React.FC<weatherWidetProps> = ({ session, city }) => {
 
 
     const getLocations = (location: string) => {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${process.env.API_KEY}`)
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=b8f7bee941ac693a5f4bda548d8f4995`)
             .then(response => response.json()).then(json => {
                 console.log(json);
                 if (json.cod === 404) {
