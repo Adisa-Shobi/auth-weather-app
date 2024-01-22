@@ -19,8 +19,8 @@ export default function Login() {
             await signIn('credentials', {
               redirectTo: '/protected',
               email: formData.get('email') as string,
-              password: formData.get('password') as string,
-            });
+              password: formData.get('password') as string,              
+            })
           }}
         >
           <SubmitButton>Sign in</SubmitButton>

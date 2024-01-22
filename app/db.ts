@@ -14,10 +14,18 @@ let users = pgTable('User', {
   id: serial('id').primaryKey(),
   email: varchar('email', { length: 64 }),
   password: varchar('password', { length: 64 }),
+  city: varchar('city', { length: 64 }),
 });
 
 export async function getUser(email: string) {
   return await db.select().from(users).where(eq(users.email, email));
+}
+
+export async function saveCity(email: string, city: string) {
+  return await db
+    .update(users)
+    .set({ city })
+    .where(eq(users.email, email));
 }
 
 export async function createUser(email: string, password: string) {

@@ -11,6 +11,7 @@ export const {
   signOut,
 } = NextAuth({
   ...authConfig,
+  secret: process.env.AUTH_SECRET!,
   providers: [
     Credentials({
       async authorize({ email, password }: any) {
@@ -19,6 +20,7 @@ export const {
         let passwordsMatch = await compare(password, user[0].password!);
         if (passwordsMatch) return user[0] as any;
       },
+      
     }),
   ],
 });
