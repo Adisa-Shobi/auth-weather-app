@@ -5,7 +5,7 @@ import SearchField from "./SearchField";
 import WeatherPanel from "./WeatherPanel";
 import { signOut } from "../auth";
 import { Session } from "next-auth";
-import { logOut } from "./function";
+import { getLocations, logOut } from "./function";
 
 interface weatherWidetProps {
     session: Session | null;
@@ -20,42 +20,29 @@ const WeatherWidget: React.FC<weatherWidetProps> = ({ session, city }) => {
     const handleSearch = (newLocation: string) => {
         // Handle the search logic using the 'location' state
         setLocation(newLocation);
-        getLocations(newLocation);
+        getLocations(newLocation).then((info) => {
+            setWeatherInfo(info);
+        });
 
     };
 
 
 
-    const getLocations = (location: string) => {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=b8f7bee941ac693a5f4bda548d8f4995`)
-            .then(response => response.json()).then(json => {
-                console.log(json);
-                if (json.cod === 404) {
-                    return;
-                }
-                let info: WeatherInfo = {
-                    city: json.name,
-                    country: json.sys.country,
-                    temperature: Math.round(json.main.temp),
-                    weatherCondition: json.weather[0].main,
-                    humidity: json.main.humidity,
-                    windSpeed: json.wind.speed
-                }
-                console.log(info);
-                setWeatherInfo(info);
-            })
-    }
+    
 
     useEffect(() => {
         console.log(city);
         if (city !== null && !weatherInfo) {
-            getLocations(city);
+            getLocations(city).then((info) => {
+                setWeatherInfo(info);
+            });
+            
         }
     }, []);
 
 
     return (
-        <div className="w-5/12 h-full flex flex-col justify-center items-center text-gray">
+        <div className="w-5/12 min-w-80 h-full flex flex-col justify-center items-center text-gray">
             {
 
                 !weatherInfo ? <div className="w-full flex flex-col justify-center items-center" ><SearchField value={location} onSearch={handleSearch} /> <button

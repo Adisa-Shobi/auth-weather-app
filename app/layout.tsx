@@ -2,6 +2,7 @@ import './globals.css';
 
 import { GeistSans } from 'geist/font/sans';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 let title = 'Next.js + Postgres Auth Starter';
 let description =
@@ -29,9 +30,21 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap" />
       </head>
       <body className={GeistSans.variable}>
-        <ToastContainer />
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          closeButton={false}
+          toastClassName="bg-white" // Apply Tailwind CSS class
+        />
         {children}
-        </body>
+      </body>
     </html>
   );
 }

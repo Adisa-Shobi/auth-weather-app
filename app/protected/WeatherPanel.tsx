@@ -5,6 +5,7 @@ import ToggleSwitch from './Toogle';
 import { saveCity } from '../db';
 import { Session } from 'next-auth';
 import { saveCityFunc } from './function';
+import { toast } from 'react-toastify';
 
 interface WeatherCardProps {
   weatherInfo: WeatherInfo;
@@ -16,7 +17,7 @@ const WeatherApp: React.FC<WeatherCardProps> = ({ weatherInfo, setWeatherInfo, s
   const [temp, setTemp] = useState(weatherInfo.temperature);
   const [units, setUnits] = useState('°C');
   return (
-    <div className="p-7 w-full mx-auto overflow-auto rounded-lg shadow-lg flex flex-col bg-white  ">
+    <div className="p-7 w-full  mx-auto overflow-auto rounded-lg shadow-lg flex flex-col bg-white  ">
       {/* Header */}
       <div className='flex flex-row justify-between' >
         <div className='flex items-center justify-between text-2xl text-teal-600'>
@@ -84,7 +85,9 @@ const WeatherApp: React.FC<WeatherCardProps> = ({ weatherInfo, setWeatherInfo, s
       </div>
       <button className="w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 mt-3 rounded"
       onClick={() => {
-        saveCityFunc(session?.user?.email ?? "", weatherInfo.city);
+        saveCityFunc(session?.user?.email ?? "", weatherInfo.city).then(() => {
+          toast("City saved successfully");
+        });
       }}
       >
   Save
