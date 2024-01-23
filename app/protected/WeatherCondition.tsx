@@ -28,7 +28,7 @@ const WeatherCondition: React.FC<WeatherConditionProps> = ({ condition }) => {
         case 'Clouds':
             weatherIcon = cloud;
             break;
-        case 'Haze':
+        case 'Mist':
             weatherIcon = mist;
             break;
         default:
